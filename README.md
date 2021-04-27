@@ -6,6 +6,10 @@ https://github.com/Xirider/finetune-gpt2xl
 
 I used AWS p3.8xlarge through a cheap reseller that's no longer in business. p3.2xlarge	ran out of system memory. To make everything easier, I ran the whole process as root in the root home dir. You can clone the repo listed above and put in the files from this.
 
+If you are looking for the results, check out this repository:
+
+https://github.com/finetuneanon/gpt-neo_dungeon
+
 # Dataset preparation
 
 There is no '<|startoftext|>' token, only '<|endoftext|>'. If you have a weird dataset with '<|startoftext|>' tokens, remove them.
@@ -16,7 +20,11 @@ Tokenizing the data at runtime is a waste of time, so I prepare a pretokenized d
 cat inputs/*.txt | python encode.py
 ```
 
-Your dataset is now in fb-2048.map. A good way of getting that on your instance is to upload it to google drive and download it with gdown.
+Your dataset is now in fb-2048.map. A good way of getting that on your instance is to upload it to google drive and download it with gdown. I uploaded my datasets here:
+
+https://mega.nz/folder/WIMl1a6K#j8av_rSB4nBf8nys0FxX8g
+
+aidungeon-2048.map is the original text adventure dataset without '<|startoftext|>' tokens and processed through encode.py. I haven't actually used this one.
 
 # Instance setup
 
