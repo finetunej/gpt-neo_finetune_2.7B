@@ -636,7 +636,7 @@ def main():
           raise
         if len(txt.strip()) > 0:
           if out is None:
-            out = open(args.outfile, "w") if args.outfile is not '-' else sys.stdout
+            out = open(args.outfile, "w", encoding="utf-8") if args.outfile is not '-' else sys.stdout
           out.write(txt)
           out.flush()
 
