@@ -22,8 +22,12 @@ if not os.path.isdir(output):
 
 print("Source: " + args.source_folder + "\nOutput: " + args.output_folder)
 
-for file in os.listdir(args.source_folder):
-    file = source / Path(file)
-    out = output / Path(os.path.basename(file))
-    print(repr(str(file)) + " to " + repr(str(out)))
-    subprocess.call(["python3", "epub2txt-all", "-nc", "-p", "-n", "-f", "-a", "<|endoftext|>", "-v", str(file), str(out)])
+for root, subdirs, files in os.walk(args.source_folder):
+    for file in files:
+        file = str(Path(root) / Path(file))
+        if not file.lower().endswith('epub'):
+            print("skip: " + repr(file))
+            continue
+        out = str(output / Path(os.path.basename(file)))
+        print(repr(file) + " to " + repr(out))
+        subprocess.call(["python3", "epub2txt-all", "-nc", "-p", "-n", "-f", "-a", "<|endoftext|>", "-v", file, out])
