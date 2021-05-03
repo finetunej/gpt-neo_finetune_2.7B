@@ -28,6 +28,12 @@ for root, subdirs, files in os.walk(args.source_folder):
         if not file.lower().endswith('epub'):
             print("skip: " + repr(file))
             continue
-        out = str(output / Path(os.path.basename(file)))
+        out = str(output / Path(file).stem)
+        postfix = ".txt"
+        i = 0
+        while os.path.isfile(out + postfix):
+            i += 1
+            postfix = "-" + str(i) + ".txt"
+        out += postfix
         print(repr(file) + " to " + repr(out))
         subprocess.call(["python3", "epub2txt-all", "-nc", "-p", "-n", "-f", "-a", "<|endoftext|>", "-v", file, out])
