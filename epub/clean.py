@@ -38,7 +38,9 @@ for root, subdirs, files in os.walk(args.source_folder):
         print(repr(file) + " to " + repr(out))
         with open(file, 'r', encoding='utf-8') as fh:
             text = fh.read()
-        text = ftfy.fix_text(text).replace(' …', '...').replace('…', '...').replace('\n\n\n', '\n').replace('\n\n', '\n')
+        text = ftfy.fix_text(text).replace(' …', '...').replace('…', '...').replace("»", "\"").replace("«", "\"").replace('\r\n', '\n').replace('\r', '\n').replace('\n\n\n', '\n').replace('\n\n', '\n')
+        text = "\n".join(map(lambda x: x.strip(), text.split()))
         text += "<|endoftext|>"
+        text = text.replace("<|endoftext|>\n<|endoftext|>", "<|endoftext|>").replace("<|endoftext|><|endoftext|>", "<|endoftext|>").replace("<|endoftext|><|endoftext|>", "<|endoftext|>")
         with open(out, 'w', encoding='utf-8') as fh:
             fh.write(text)
