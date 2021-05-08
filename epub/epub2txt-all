@@ -460,7 +460,7 @@ class epub2txt():
           result = result.replace(' …', '...') # first pass: convert "foo  …" to "foo..."
           #result = result.replace(' …', '...') # second pass: convert "foo …" to "foo..."
           result = result.replace('…', '...') # final pass: convert "foo…" to "foo..."
-          result = result.replace('\N{SOFT HYPHEN}', '')
+          result = result.replace('\N{SOFT HYPHEN}', '').replace('\u200b', '')
 
         result = result.split('\n') # split into lines for performance in the following sections.
 
