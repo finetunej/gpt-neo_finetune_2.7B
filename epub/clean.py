@@ -160,7 +160,7 @@ for file in all_files:
         text = text + "<|endoftext|>"
     text = re.sub(r"(\s*<\|endoftext\|>\s*)+", "<|endoftext|>", text)
     if args.remove_eot:
-        text = re.sub(r"<\|endoftext\|>$", "", x)
+        text = re.sub(r"<\|endoftext\|>$", "", text)
     if args.split_eot:
         text = text.split("<|endoftext|>")
     else:
