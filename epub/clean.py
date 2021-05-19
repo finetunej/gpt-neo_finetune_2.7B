@@ -148,11 +148,11 @@ for file in all_files:
     text = text.replace('\r\n', '\n').replace('\r', '\n')
     if args.collapse_newlines:
         text = text.replace('\n\n\n', '\n').replace('\n\n', '\n')
+    text = re.sub(r'https?:\/\/[^\s\)\]\}]*', '(Link removed)', text)
     lines = text.split("\n")
     for i in range(len(lines)):
         lines[i] = punctuation_fix(space_fix(lines[i].strip()))
     text = "\n".join(lines)
-    text = re.sub(r'https?:\/\/[^\s\)\]\}]*', '(Link removed)', text)
     text = re.sub(r"\s*$", "", text)
     if args.unmarkdown and re.search(r'(^|\n)#', text) and re.search(r'_.*_', text):
         text = unmark(text)
