@@ -149,6 +149,7 @@ for file in all_files:
     if args.collapse_newlines:
         text = text.replace('\n\n\n', '\n').replace('\n\n', '\n')
     text = re.sub(r'https?:\/\/[^\s\)\]\}]*', '(Link removed)', text)
+    text = re.sub(r'\bwww\.[a-zA-Z0-9\-\.\/\~\_]+', '(Link removed)', text)
     lines = text.split("\n")
     for i in range(len(lines)):
         lines[i] = punctuation_fix(space_fix(lines[i].strip()))
