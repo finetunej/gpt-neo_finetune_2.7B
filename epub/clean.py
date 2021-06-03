@@ -142,10 +142,13 @@ for file in all_files:
         file_id += 1
     with open(file, 'r', encoding='utf-8') as fh:
         text = fh.read()
-    text = re.sub(r'( |\t)+', ' ', text)
-    text = re.sub(r'(^|\n)( |\t)+', r'\1', text)
-    text = ftfy.fix_text(text).replace(' …', '...').replace('…', '...').replace("»", "\"").replace("«", "\"").replace('\N{SOFT HYPHEN}', '').replace('\u200b', '')
-    text = text.replace('\r\n', '\n').replace('\r', '\n')
+    text = re.sub(r"(\b|\s)''(\b|\s)", r'\1"\2', text) # turn '' into "
+    text = re.sub(r'"+', '"', text) # fix multiple quotes
+    text = re.sub(r"'+", "'", text) # fix multiple quotes
+    text = re.sub(r'( |\t)+', ' ', text) # unindent
+    text = re.sub(r'(^|\n)( |\t)+', r'\1', text) # unindent
+    text = ftfy.fix_text(text).replace(' …', '...').replace('…', '...').replace("»", "\"").replace("«", "\"").replace('\N{SOFT HYPHEN}', '').replace('\u200b', '') # clean up special
+    text = text.replace('\r\n', '\n').replace('\r', '\n') # normalize newlines
     if args.collapse_newlines:
         text = text.replace('\n\n\n', '\n').replace('\n\n', '\n')
     text = re.sub(r'https?:\/\/[^\s\)\]\}]*', '(Link removed)', text)
@@ -153,6 +156,7 @@ for file in all_files:
     lines = text.split("\n")
     for i in range(len(lines)):
         lines[i] = punctuation_fix(space_fix(lines[i].strip()))
+    text = re.sub(r"(\d+)\s*'\s*(\d+)\s*(\")(\s*([\.\!\?]))?", r"\1'\2\3\5", text) # fix formatting of 4'2"
     text = "\n".join(lines)
     text = re.sub(r"\s*$", "", text)
     if args.unmarkdown and re.search(r'(^|\n)#', text) and re.search(r'_.*_', text):
