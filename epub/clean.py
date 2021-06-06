@@ -16,6 +16,7 @@ parser.add_argument("-a", "--add-eot", help="add final <|endoftext|> to files", 
 parser.add_argument("-s", "--split-eot", help="split into multiple files at <|endoftext|>", action='store_true')
 parser.add_argument("-x", "--shuffle", help="shuffle input file order and give numbered names", action='store_true')
 parser.add_argument("-c", "--collapse-newlines", help="collapse multiple newlines into one", action='store_true')
+parser.add_argument("-C", "--chapter-removal", help="replace chapter and part headers with ***", action='store_true')
 args = parser.parse_args()
 
 source = Path(args.input_folder)
@@ -156,8 +157,12 @@ for file in all_files:
     lines = text.split("\n")
     for i in range(len(lines)):
         lines[i] = punctuation_fix(space_fix(lines[i].strip()))
+    if args.chapter_removal:
+        text = re.sub(r'(^|\n)(PART|CHAPTER)\s+([a-z0-9]+)(\n|$)', r'\1***\4', text, flags=re.I) # remove chapter headers
     text = re.sub(r"(\d+)\s*'\s*(\d+)\s*(\")(\s*([\.\!\?]))?", r"\1'\2\3\5", text) # fix formatting of 4'2"
     text = re.sub(r"(\d+):\s*(\d+)", r"\1:\2", text) # fix formatting of 6:30
+    text = re.sub(r"([^a-zA-Z][a-zA-Z]\.) (?=[a-zA-Z]\.)", r"\1", text) # fix a.m. and similar
+    text = re.sub(r"([^a-zA-Z][a-zA-Z]\.) (?=[a-zA-Z]\.)", r"\1", text) # run twice for repeated occurences
     text = "\n".join(lines)
     text = re.sub(r"\s*$", "", text)
     if args.unmarkdown and re.search(r'(^|\n)#', text) and re.search(r'_.*_', text):
