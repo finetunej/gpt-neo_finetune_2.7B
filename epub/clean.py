@@ -1,4 +1,4 @@
-# recommended for gpt-neo tfrecords: clean.py -u -r -s -i input/ -o clean/
+# recommended for gpt-neo tfrecords: clean.py -C -u -r -s -i input/ -o clean/
 import random
 import re
 import sys
