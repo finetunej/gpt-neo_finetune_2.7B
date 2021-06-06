@@ -13,5 +13,5 @@ python epubfolder.py -s epubs/ -o txts/
 clean up stuff in folder of txts (not necessary for converted epubs, but can be useful for other txt files):
 
 ```
-python clean.py -i txts/ -o clean/ -u -r -s
+python clean.py -i txts/ -o clean/ -C -u -r -s
 ```
