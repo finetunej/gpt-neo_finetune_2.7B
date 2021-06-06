@@ -157,6 +157,7 @@ for file in all_files:
     for i in range(len(lines)):
         lines[i] = punctuation_fix(space_fix(lines[i].strip()))
     text = re.sub(r"(\d+)\s*'\s*(\d+)\s*(\")(\s*([\.\!\?]))?", r"\1'\2\3\5", text) # fix formatting of 4'2"
+    text = re.sub(r"(\d+):\s*(\d+)", r"\1:\2", text) # fix formatting of 6:30
     text = "\n".join(lines)
     text = re.sub(r"\s*$", "", text)
     if args.unmarkdown and re.search(r'(^|\n)#', text) and re.search(r'_.*_', text):
