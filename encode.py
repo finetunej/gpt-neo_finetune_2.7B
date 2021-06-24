@@ -16,6 +16,7 @@ from transformers import AutoTokenizer
 parser = argparse.ArgumentParser()
 parser.add_argument("-s", "--source-folder", help="source folder with epubs", type=str, required=True)
 parser.add_argument("-o", "--output", help="output numpy memmap", type=str, required=True)
+parser.add_argument("-t", "--tokens_per_sample", help="number of tokens per sample", type=int, default=2049)
 args = parser.parse_args()
 
 source = Path(args.source_folder)
@@ -55,7 +56,7 @@ token_buf = process_map(functools.partial(tokenize_file, tokenizer), data, chunk
 token_buf = np.concatenate(token_buf)
 
 print("save", flush=True)
-tokens_per_sample = 2049 # 2048
+tokens_per_sample = args.tokens_per_sample
 n_samples = len(token_buf) // tokens_per_sample
 print("#samples", n_samples)
 mmap = np.memmap(output, mode="w+", dtype="uint16", shape=(n_samples, tokens_per_sample))
