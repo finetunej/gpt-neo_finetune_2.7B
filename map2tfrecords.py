@@ -8,13 +8,15 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("-s", "--source", help="source numpy memmap", type=str, required=True)
 parser.add_argument("-o", "--output", help="output tfrecord base name", type=str, required=True)
+parser.add_argument("-t", "--tokens_per_sample", help="number of tokens per sample", type=int, default=2049)
+parser.add_argument("-p", "--samples_per_tfrecord", help="number of samples per tfrecord", type=int, default=1000)
 args = parser.parse_args()
 
 source = str(Path(args.source))
 output = str(Path(args.output))
 
-tokens_per_sample = 2049
-samples_per_part = 1000
+tokens_per_sample = args.tokens_per_sample
+samples_per_part = args.samples_per_tfrecord
 part = 0
 
 mmap = np.memmap(source, mode="r", dtype="uint16")
