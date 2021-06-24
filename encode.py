@@ -55,15 +55,16 @@ token_buf = process_map(functools.partial(tokenize_file, tokenizer), data, chunk
 token_buf = np.concatenate(token_buf)
 
 print("save", flush=True)
-n_samples = len(token_buf) // 2048
+tokens_per_sample = 2049 # 2048
+n_samples = len(token_buf) // tokens_per_sample
 print("#samples", n_samples)
-mmap = np.memmap(output, mode="w+", dtype="uint16", shape=(n_samples, 2048))
+mmap = np.memmap(output, mode="w+", dtype="uint16", shape=(n_samples, tokens_per_sample))
 
 indexes = list(range(n_samples))
 random.shuffle(indexes)
 
 for target, source in tqdm(enumerate(indexes)):
-    mmap[target, :] = np.array(token_buf[source * 2048:(source + 1) * 2048], dtype=np.uint16)
+    mmap[target, :] = np.array(token_buf[source * tokens_per_sample:(source + 1) * tokens_per_sample], dtype=np.uint16)
 
 mmap.flush()
 
