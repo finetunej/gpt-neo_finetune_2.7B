@@ -15,3 +15,5 @@ clean up stuff in folder of txts (not necessary for converted epubs, but can be 
 ```
 python clean.py -i txts/ -o clean/ -C -u -r -s
 ```
+
+# don't actually clean.py without making a backup first and checking how much it fucks up
