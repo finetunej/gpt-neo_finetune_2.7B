@@ -28,7 +28,7 @@ print("listing")
 for root, subdirs, files in os.walk(args.source_folder):
     for file in files:
         file = str(Path(root) / Path(file))
-        if not file.lower().endswith('txt'):
+        if not file.lower().endswith('txt') or os.path.getsize(file) < 1:
             continue
         data.append(file)
 
@@ -44,15 +44,16 @@ def tokenize_file(tokenize, filename):
     with open(filename, "rb") as fh:
         text = fh.read().decode('utf-8', 'surrogateescape')
         if len(text) < 1:
-            return
+            return np.array([])
         text = text + '<|endoftext|>'
         tokens = tokenizer.encode(text, truncation=False)
         if tokens is None or len(tokens) < 1:
-            return
+            return np.array([])
         return np.array(tokens, dtype=np.uint16)
 
 print("tokenize", flush=True)
 token_buf = process_map(functools.partial(tokenize_file, tokenizer), data, chunksize=20, max_workers=8)
+token_buf = list(filter(lambda x: x is not None and len(x.shape) > 0 and x.shape[0] > 0, token_buf))
 token_buf = np.concatenate(token_buf)
 
 print("save", flush=True)
