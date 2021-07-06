@@ -55,6 +55,12 @@ print("tokenize", flush=True)
 token_buf = process_map(functools.partial(tokenize_file, tokenizer), data, chunksize=20, max_workers=8)
 token_buf = list(filter(lambda x: x is not None and len(x.shape) > 0 and x.shape[0] > 0, token_buf))
 token_buf = np.concatenate(token_buf)
+missing = args.tokens_per_sample - (token_buf.shape[0] % args.tokens_per_sample)
+if missing > 0:
+    if missing > 1:
+        token_buf = np.concatenate((token_buf, np.array([50256]), token_buf[:missing-1]))
+    else:
+        token_buf = np.concatenate((token_buf, np.array([50256])))
 
 print("save", flush=True)
 tokens_per_sample = args.tokens_per_sample
