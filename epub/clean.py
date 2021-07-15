@@ -56,6 +56,7 @@ def unmark(text):
     return __md.convert(text)
 
 def space_fix(s):
+    return s
     have_open = False
     need_space = False
     need_now = False
@@ -97,6 +98,7 @@ def space_fix(s):
 
 punctuation = ['.', '?', '!', ',', ':', ';', '-', ']', ')', '}', '[', '(', '{']
 def punctuation_fix(s):
+    return s
     r = ""
     was_punctuation = False
     was_space = True
