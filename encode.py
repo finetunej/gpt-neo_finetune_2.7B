@@ -43,7 +43,7 @@ token_buf = []
 
 def tokenize_file(tokenize, filename):
     with open(filename, "rb") as fh:
-        text = fh.read().decode('utf-8', 'surrogateescape')
+        text = fh.read().decode('utf-8', 'surrogateescape').replace("\r\n", "\n").replace("\r", "\n")
         if len(text) < 1:
             return np.array([])
         text = text + '<|endoftext|>'
