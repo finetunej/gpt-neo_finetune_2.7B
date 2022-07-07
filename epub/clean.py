@@ -157,14 +157,14 @@ for file in all_files:
     #text = re.sub(r'https?:\/\/[^\s\)\]\}]*', '(Link removed)', text)
     #text = re.sub(r'\bwww\.[a-zA-Z0-9\-\.\/\~\_]+', '(Link removed)', text)
     lines = text.split("\n")
-    for i in range(len(lines)):
-        lines[i] = punctuation_fix(space_fix(lines[i].strip()))
+    #for i in range(len(lines)):
+    #    lines[i] = punctuation_fix(space_fix(lines[i].strip()))
     if args.chapter_removal:
         text = re.sub(r'(^|\n)(PART|CHAPTER)\s+([a-z0-9]+)(\n|$)', r'\1***\4', text, flags=re.I) # remove chapter headers
-    text = re.sub(r"(\d+)\s*'\s*(\d+)\s*(\")(\s*([\.\!\?]))?", r"\1'\2\3\5", text) # fix formatting of 4'2"
-    text = re.sub(r"(\d+):\s*(\d+)", r"\1:\2", text) # fix formatting of 6:30
-    text = re.sub(r"([^a-zA-Z][a-zA-Z]\.) (?=[a-zA-Z]\.)", r"\1", text) # fix a.m. and similar
-    text = re.sub(r"([^a-zA-Z][a-zA-Z]\.) (?=[a-zA-Z]\.)", r"\1", text) # run twice for repeated occurences
+    #text = re.sub(r"(\d+)\s*'\s*(\d+)\s*(\")(\s*([\.\!\?]))?", r"\1'\2\3\5", text) # fix formatting of 4'2"
+    #text = re.sub(r"(\d+):\s*(\d+)", r"\1:\2", text) # fix formatting of 6:30
+    #text = re.sub(r"([^a-zA-Z][a-zA-Z]\.) (?=[a-zA-Z]\.)", r"\1", text) # fix a.m. and similar
+    #text = re.sub(r"([^a-zA-Z][a-zA-Z]\.) (?=[a-zA-Z]\.)", r"\1", text) # run twice for repeated occurences
     text = "\n".join(lines)
     text = re.sub(r"\s*$", "", text)
     if args.unmarkdown and re.search(r'(^|\n)#', text) and re.search(r'_.*_', text):
