@@ -36,4 +36,4 @@ for root, subdirs, files in os.walk(args.source_folder):
             postfix = "-" + str(i) + ".txt"
         out += postfix
         print(repr(file) + " to " + repr(out))
-        subprocess.call(["python3", "epub2txt-all", "-nc", "-p", "-n", "-f", "-a", "<|endoftext|>", "-v", file, out])
+        subprocess.call(["python3", "epub2txt-all", "-nc", "-p", "-n", "-f", "-v", file, out])
