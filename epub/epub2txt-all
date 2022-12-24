@@ -423,6 +423,7 @@ class epub2txt():
             sys.stderr.write(self.epub_name+'/'+xmlfile + '\n')
           h = html2text.HTML2Text()
           h.body_width = 0
+          h.ignore_emphasis = True
           text = h.handle(html)
           if not text.endswith('\n'):
             text += '\n'
