@@ -145,12 +145,12 @@ for file in all_files:
         file_id += 1
     with open(file, 'r', encoding='utf-8') as fh:
         text = fh.read()
-    text = re.sub(r"(\b|\s)''(\b|\s)", r'\1"\2', text) # turn '' into "
+    #text = re.sub(r"(\b|\s)''(\b|\s)", r'\1"\2', text) # turn '' into "
     text = re.sub(r'"+', '"', text) # fix multiple quotes
     text = re.sub(r"'+", "'", text) # fix multiple quotes
     text = re.sub(r'( |\t)+', ' ', text) # unindent
     text = re.sub(r'(^|\n)( |\t)+', r'\1', text) # unindent
-    text = ftfy.fix_text(text).replace(' …', '...').replace('…', '...').replace('\N{SOFT HYPHEN}', '').replace('\u200b', '') # clean up special
+    text = ftfy.fix_text(text).replace('…', '...').replace('\N{SOFT HYPHEN}', '').replace('\u200b', '') # clean up special
     text = text.replace('\r\n', '\n').replace('\r', '\n') # normalize newlines
     if args.collapse_newlines:
         text = text.replace('\n\n\n', '\n').replace('\n\n', '\n')
