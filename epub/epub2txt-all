@@ -439,7 +439,7 @@ class epub2txt():
           if keep_file:
             content.append(text)
           else:
-            print("Skip")
+            print("Skip", file=sys.stderr)
           if not args.no_metadata:
             content.append('<|/file name={}|>'.format(json.dumps(bookname)) + '\n')
 
